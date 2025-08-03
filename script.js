@@ -1,146 +1,100 @@
-let grafico = null;
-
-
+let graficoProducao = null;
 const historico = [];
 
 function simularProdutividade() {
+  const cultura = document.getElementById("cultura").value;
+  const solo = document.getElementById("solo").value;
+  const semente = document.getElementById("semente")?.value || "N/A";
+  const manejo = document.getElementById("manejo")?.value || "N/A";
+  const clima = document.getElementById("clima").value;
+  const quimico = document.getElementById("quimico")?.value || "N/A";
+  const tipoGrao = document.getElementById("tipoGrao")?.value || "N/A";
+  const hectares = parseFloat(document.getElementById("hectares")?.value || 1);
 
-  const cultura = document.getElementById('cultura').value;
-  const solo = document.getElementById('solo').value;
-  const clima = document.getElementById('clima').value;
-  const hectares = parseFloat(document.getElementById('hectares').value);
-  const usaQuimico = document.getElementById('quimico').value;
-  const tipoGrao = document.getElementById('tipoGrao').value;
-
-  if (isNaN(hectares) || hectares <= 0) {
-    alert('Por favor, insira uma quantidade válida de hectares.');
+  if (!cultura || !solo || !clima) {
+    alert("Por favor, preencha todos os campos obrigatórios.");
     return;
   }
 
-  let estimativaBase = 50;
+  // Produtividade base ajustada com regras simples; considerar externalizar para config
+  let produtividadeBase = 100;
 
-  if (cultura === 'soja') {
-    if (solo === 'argiloso') estimativaBase += 5;
-    if (clima === 'ideal') estimativaBase += 10;
-    if (usaQuimico === 'sim') estimativaBase += 10;
-    if (tipoGrao === 'transgenico') estimativaBase += 7;
-    else if (tipoGrao === 'organico') estimativaBase -= 5;
-  } else if (cultura === 'milho') {
-    if (solo === 'misto') estimativaBase += 7;
-    if (clima === 'chuvoso') estimativaBase += 10;
-    if (usaQuimico === 'sim') estimativaBase += 8;
-    if (tipoGrao === 'transgenico') estimativaBase += 5;
-    else if (tipoGrao === 'organico') estimativaBase -= 6;
-  } else if (cultura === 'trigo') {
-    if (solo === 'arenoso') estimativaBase += 3;
-    if (clima === 'ideal') estimativaBase += 8;
-    if (usaQuimico === 'sim') estimativaBase += 6;
-    if (tipoGrao === 'transgenico') estimativaBase += 4;
-    else if (tipoGrao === 'organico') estimativaBase -= 4;
-  }
+  if (solo === "arenoso") produtividadeBase -= 20;
+  if (clima === "seco" || clima === "seca_moderada") produtividadeBase -= 25;
+  if (clima === "chuvas_irregulares") produtividadeBase -= 10;
+  if (manejo === "regenerativo") produtividadeBase += 10;
+  if (semente === "transgênica") produtividadeBase += 15;
+  if (quimico === "sim") produtividadeBase += 5;
 
-  const estimativa = Math.min(Math.max(estimativaBase, 30), 100);
+  const produtividadeFinal = Math.max(0, produtividadeBase);
+  const producaoTotal = produtividadeFinal * hectares;
+  const perda = Math.max(0, 100 * hectares - producaoTotal);
 
-  const resultado = `Estimativa: ${estimativa.toFixed(0)} sacas/ha com base nas condições informadas.`;
-  document.getElementById('resultado').innerText = resultado;
+  document.getElementById("resultado").innerHTML = `<strong>Produtividade:</strong> ${produtividadeFinal.toFixed(2)} sacas/hectare`;
+  document.getElementById("ganhoPerda").innerHTML = `<strong>Produção Total:</strong> ${producaoTotal.toFixed(2)} sacas<br/><strong>Perda Estimada:</strong> ${perda.toFixed(2)} sacas`;
 
-  const precoPorSaca = 150;
-  const totalSacas = estimativa * hectares;
-  const valorTotal = totalSacas * precoPorSaca;
-  const textoGanhoPerda = `Ganho estimado: ${totalSacas.toFixed(2)} sacas, equivalente a R$ ${valorTotal.toFixed(2)}.`;
-  document.getElementById('ganhoPerda').innerText = textoGanhoPerda;
-
-  const registro = `${cultura.toUpperCase()} - Solo: ${solo}, Clima: ${clima}, Hectares: ${hectares}, Químico: ${usaQuimico}, Tipo Grão: ${tipoGrao} => ${resultado}`;
-
-  // Salva simulação no histórico
-  const simulacao = { cultura, solo, clima, hectares, usaQuimico, tipoGrao, estimativa, totalSacas, valorTotal, texto: registro };
-  historico.push(simulacao);
-
-  atualizarHistorico();
-  sugerirPraticas(cultura);
-  atualizarGraficoComSimulacao(simulacao);
+  gerarGrafico(produtividadeFinal, perda);
+  adicionarAoHistorico({ cultura, solo, clima, produtividadeFinal });
 }
 
-function atualizarHistorico() {
-  const lista = document.getElementById('listaHistorico');
-  lista.innerHTML = '';
-
-  // Mostrar do mais recente para o mais antigo, numerando
-  historico.slice().reverse().forEach((item, index) => {
-    const li = document.createElement('li');
-    // Número da simulação (index 0 = última simulação, então enumeração invertida)
-    const numeroSimulacao = historico.length - index;
-    li.textContent = `${numeroSimulacao}. ${item.texto}`;
-    li.style.cursor = 'pointer';
-    li.title = 'Clique para visualizar essa simulação no gráfico';
-
-    li.onclick = () => {
-      atualizarGraficoComSimulacao(item);
-      document.getElementById('resultado').innerText = item.texto.match(/Estimativa:.*\./)[0];
-      document.getElementById('ganhoPerda').innerText = `Ganho estimado: ${item.totalSacas.toFixed(2)} sacas, equivalente a R$ ${item.valorTotal.toFixed(2)}.`;
-      sugerirPraticas(item.cultura);
-    };
-
-    lista.appendChild(li);
-  });
-}
-
-function atualizarGraficoComSimulacao(simulacao) {
-  const ctx = document.getElementById('graficoProducao').getContext('2d');
-
-  if (grafico) grafico.destroy();
-
-  grafico = new Chart(ctx, {
-    type: 'bar',
+function gerarGrafico(produtividade, perda) {
+  const ctx = document.getElementById("graficoProducao").getContext("2d");
+  if (graficoProducao) graficoProducao.destroy();
+  graficoProducao = new Chart(ctx, {
+    type: "bar",
     data: {
-      labels: ['Produtividade (sacas/ha)'],
+      labels: ["Produtividade", "Perda"],
       datasets: [{
-        label: `${simulacao.cultura.toUpperCase()} (${simulacao.tipoGrao})`,
-        data: [simulacao.estimativa],
-        backgroundColor: '#66bb6a'
-      }]
+        label: "Resultado da Simulação",
+        backgroundColor: ["#4caf50", "#f44336"],
+        data: [produtividade, perda],
+      }],
     },
     options: {
       responsive: true,
       scales: {
         y: {
           beginAtZero: true,
-          max: 120
-        }
-      },
-      plugins: {
-        legend: {
-          display: true,
-          position: 'top',
-        },
-        tooltip: {
-          enabled: true,
+          title: {
+            display: true,
+            text: "Sacas"
+          }
         }
       }
-    }
+    },
   });
 }
 
+function adicionarAoHistorico(simulacao) {
+  historico.push(simulacao);
+  atualizarHistorico();
+}
 
-function sugerirPraticas(cultura) {
-  const sugestoes = {
-    soja: 'Sugestão: Utilize cultivares resistentes à ferrugem e plante com espaçamento de 45 cm.',
-    milho: 'Sugestão: Faça o plantio direto e use híbridos com maior tolerância à seca.',
-    trigo: 'Sugestão: Faça a semeadura no início da janela ideal e mantenha boa cobertura do solo.'
-  };
-  document.getElementById('sugestoes').innerText = sugestoes[cultura] || '';
+function atualizarHistorico() {
+  const lista = document.getElementById("listaHistorico");
+  lista.innerHTML = "";
+  historico.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.textContent = `#${index + 1} - Cultura: ${item.cultura}, Solo: ${item.solo}, Clima: ${item.clima}, Produtividade: ${item.produtividadeFinal.toFixed(2)} sacas/hectare`;
+    lista.appendChild(li);
+  });
 }
 
 function resetarSimulacoes() {
   historico.length = 0;
-  document.getElementById('resultado').innerText = '';
-  document.getElementById('ganhoPerda').innerText = '';
-  document.getElementById('sugestoes').innerText = '';
-  document.getElementById('listaHistorico').innerHTML = '';
-  if (grafico) {
-    grafico.destroy();
-    grafico = null;
-  }
+  atualizarHistorico();
+  document.getElementById("resultado").innerHTML = "";
+  document.getElementById("ganhoPerda").innerHTML = "";
+  if (graficoProducao) graficoProducao.destroy();
 }
 
-
+/* Event listener: garante que o formulário não recarregue a página e chama a simulação */
+window.onload = () => {
+  const form = document.getElementById("formSimulador");
+  if (form) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      simularProdutividade();
+    });
+  }
+};

@@ -2,101 +2,95 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SolvPlan - Simulador Agrícola</title>
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Biblioteca para gráficos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SolvAgro – Simulador Agrícola</title>
+  <link rel="stylesheet" href="style.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <h1>SolvAgro </h1>
+      <p class="slogan">Simule. Preveja. Decida com inteligência.</p>
+    </header>
 
-  <!-- Cabeçalho -->
-  <header>
-    <h1>SolvPlan</h1>
-    <p>Simulador de Plantio Inteligente</p>
-  </header>
+    <main>
+      <!-- Formulário de Simulação -->
+      <section class="simulador">
+        <h2>Simule sua produtividade</h2>
+        <form id="formSimulador">
+          <label for="cultura">Cultura:</label>
+          <select id="cultura" required>
+            <option value="">Selecione</option>
+            <option value="soja">Soja</option>
+            <option value="milho">Milho</option>
+            <option value="trigo">Trigo</option>
+          </select>
 
-  <!-- Conteúdo Principal -->
-  <main>
+          <label for="solo">Tipo de Solo:</label>
+          <select id="solo" required>
+            <option value="">Selecione</option>
+            <option value="argiloso">Argiloso</option>
+            <option value="arenoso">Arenoso</option>
+            <option value="misturado">Misturado</option>
+          </select>
 
-    <!-- Simulador de Produtivaidade -->
-    <section class="simulador">
-      <h2>Simule sua produtividade</h2>
+          <label for="semente">Semente:</label>
+          <select id="semente" required>
+            <option value="">Selecione</option>
+            <option value="convencional">Convencional</option>
+            <option value="tratada">Tratada</option>
+            <option value="transgênica">Transgênica</option>
+          </select>
 
-      <form id="formSimulador">
+          <label for="manejo">Tipo de Manejo:</label>
+          <select id="manejo" required>
+            <option value="">Selecione</option>
+            <option value="convencional">Convencional</option>
+            <option value="orgânico">Orgânico</option>
+            <option value="regenerativo">Regenerativo</option>
+          </select>
 
-        <label for="cultura">Cultura:</label>
-        <select id="cultura" required>
-          <option value="soja">Soja</option>
-          <option value="milho">Milho</option>
-          <option value="trigo">Trigo</option>
-        </select>
+          <label for="clima">Previsão de Clima:</label>
+          <select id="clima" required>
+            <option value="">Selecione</option>
+            <option value="chuvas_constantes">Chuvas constantes</option>
+            <option value="seca_moderada">Seca moderada</option>
+            <option value="seca_severa">Seca severa</option>
+            <option value="chuvas_irregulares">Chuvas irregulares</option>
+          </select>
 
-        <label for="quimico">Usa produto químico?</label>
-        <select id="quimico" required>
-          <option value="sim">Sim</option>
-          <option value="nao">Não</option>
-        </select>
+          <label for="hectares">Quantidade de Hectares:</label>
+          <input type="number" id="hectares" min="0" step="0.1" placeholder="Ex: 10" required />
 
-        <label for="tipoGrao">Tipo de Grão:</label>
-        <select id="tipoGrao" required>
-          <option value="convencional">Convencional</option>
-          <option value="transgenico">Transgênico</option>
-          <option value="organico">Orgânico</option>
-        </select>
+          <button type="submit">Simular</button>
+        </form>
 
-        <label for="solo">Tipo de Solo:</label>
-        <select id="solo" required>
-          <option value="argiloso">Argiloso</option>
-          <option value="arenoso">Arenoso</option>
-          <option value="misto">Misto</option>
-        </select>
+        <div id="resultado" class="resultado"></div>
+        <div id="ganhoPerda"></div>
+        <div id="sugestoes"></div>
 
-        <label for="clima">Condição Climática:</label>
-        <select id="clima" required>
-          <option value="seco">Seco</option>
-          <option value="ideal">Ideal</option>
-          <option value="chuvoso">Chuvoso</option>
-        </select>
+        <!-- Gráfico -->
+        <div id="graficoContainer">
+          <canvas id="graficoProducao" width="400" height="200"></canvas>
+        </div>
+      </section>
 
-        <label for="hectares">Quantidade de Hectares:</label>
-        <input type="number" id="hectares" min="0" step="0.1" placeholder="Ex: 10" required />
+      <!-- Histórico de Simulações -->
+      <section class="historico">
+        <div class="historico-header">
+          <h2>Histórico de Simulações</h2>
+          <button id="btnResetar" onclick="resetarSimulacoes()">Limpar Histórico</button>
+        </div>
+        <ul id="listaHistorico"></ul>
+      </section>
+    </main>
 
-        <button type="button" onclick="simularProdutividade()">Simular</button>
-      </form>
+    <footer>
+      <p>&copy; 2025 SolvAgro</p>
+    </footer>
+  </div>
 
-      <!-- Resultados -->
-      <div id="resultado"></div>
-      <div id="ganhoPerda"></div>
-      <div id="sugestoes"></div>
-
-      <!-- Gráfico -->
-      <div id="graficoContainer">
-        <canvas id="graficoProducao" width="400" height="200"></canvas>
-      </div>
-    </section>
-
-    <!-- Histórico de Simulações -->
-    <section class="historico">
-      <div class="historico-header">
-        <h2>Histórico de Simulações</h2>
-        <button id="btnResetar" onclick="resetarSimulacoes()">Limpar Histórico</button>
-      </div>
-      <ul id="listaHistorico"></ul>
-    </section>
-  </main>
-
-  
-
-  <!-- Rodapé -->
-  <footer>
-    <p>&copy; 2025 SolvPlan</p>
-  </footer>
-
-  <!-- Scripts -->
   <script src="script.js"></script>
-</body> 
+</body>
 </html>
