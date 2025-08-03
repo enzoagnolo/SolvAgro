@@ -182,3 +182,11 @@ button:hover {
   scrollbar-width: thin;
   scrollbar-color: #66bb6a #e8f5e9;
 }
+
+.grafico canvas {
+  width: 100% !important;
+  max-width: 500px;
+  height: 300px !important;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+}

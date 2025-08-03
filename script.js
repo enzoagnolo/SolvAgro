@@ -1,10 +1,10 @@
 let grafico = null;
 
-// Guarda as simulações completas no histórico
+
 const historico = [];
 
 function simularProdutividade() {
-  // Captura inputs
+
   const cultura = document.getElementById('cultura').value;
   const solo = document.getElementById('solo').value;
   const clima = document.getElementById('clima').value;
@@ -17,7 +17,6 @@ function simularProdutividade() {
     return;
   }
 
-  // Cálculo estimativa (exemplo simplificado)
   let estimativaBase = 50;
 
   if (cultura === 'soja') {
@@ -143,3 +142,5 @@ function resetarSimulacoes() {
     grafico = null;
   }
 }
+
+
