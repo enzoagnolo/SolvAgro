@@ -8,9 +8,8 @@
 /* BASE */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f9f4;
-  color: #2e7d32;
-  line-height: 1.5;
+  background: #f0f4f3;
+  color: #1b5e20;
   min-height: 100vh;
   padding: 1rem;
   display: flex;
@@ -19,12 +18,12 @@ body {
 
 /* CABEÇALHO */
 header {
-  background-color: #2e7d32;
+  background: linear-gradient(135deg, #2e7d32, #43a047);
   color: white;
   text-align: center;
-  padding: 1.2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   width: 100%;
 }
 
@@ -35,15 +34,15 @@ main {
   max-width: 1400px;
   margin: 2rem auto;
   padding: 2rem;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.2);
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-/* GRID RESPONSIVO A PARTIR DE 768PX */
+/* RESPONSIVO A PARTIR DE 768PX */
 @media (min-width: 768px) {
   main {
     flex-direction: row;
@@ -65,15 +64,15 @@ h1, h2 {
 }
 
 h1 {
-  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
-  margin-bottom: 0.3rem;
+  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  margin-bottom: 0.5rem;
 }
 
 h2 {
-  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  font-size: clamp(1.4rem, 2vw, 2rem);
   margin-bottom: 1rem;
   border-bottom: 3px solid #66bb6a;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.4rem;
 }
 
 /* FORMULÁRIOS */
@@ -84,55 +83,62 @@ label {
 }
 
 input[type="number"],
-select,
-input[type="text"] {
+input[type="text"],
+select {
   width: 100%;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.9rem;
   margin-top: 0.3rem;
-  border: 2px solid #a5d6a7;
-  border-radius: 6px;
+  border: 2px solid #c8e6c9;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background-color: #fefefe;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 input:focus,
 select:focus {
   border-color: #2e7d32;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
 }
 
 /* BOTÕES */
 button {
   width: 100%;
-  max-width: 220px;
-  margin-top: 1.2rem;
-  padding: 0.7rem 1rem;
-  background-color: #43a047;
+  max-width: 240px;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.2rem;
+  background: linear-gradient(to right, #43a047, #66bb6a);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.2s ease, background 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 button:hover {
-  background-color: #388e3c;
+  background: linear-gradient(to right, #388e3c, #43a047);
+  transform: scale(1.03);
 }
 
-/* RESULTADOS */
+/* RESULTADOS E SUGESTÕES */
 #resultado,
 #ganhoPerda,
 #sugestoes,
-#resposta {
+#resposta,
+#infoClima {
   background-color: #e8f5e9;
   border-left: 6px solid #2e7d32;
   padding: 1rem 1.2rem;
   margin-top: 1rem;
-  border-radius: 6px;
+  border-radius: 10px;
   font-weight: 600;
   width: 100%;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
 }
 
 /* HISTÓRICO */
@@ -148,23 +154,60 @@ button:hover {
   max-height: 300px;
   overflow-y: auto;
   border: 1px solid #a5d6a7;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f9fff9;
   padding: 0.5rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .historico li {
   background-color: #f1f8e9;
   padding: 0.7rem 1rem;
   border-left: 5px solid #8bc34a;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+.historico li:hover {
+  background-color: #e0f2f1;
+  cursor: pointer;
 }
 
 /* GRÁFICO */
 #graficoContainer {
   margin-top: 2rem;
   width: 100%;
+}
+
+.grafico canvas {
+  width: 100% !important;
+  max-width: 500px;
+  height: 300px !important;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* CLIMA */
+.clima {
+  margin-top: 2rem;
+  background-color: #f1f8e9;
+  border-left: 5px solid #66bb6a;
+  padding: 1.5rem 1.2rem;
+  border-radius: 10px;
+  max-width: 600px;
+  box-shadow: 0 2px 8px rgba(76,175,80,0.1);
+}
+
+#cidade {
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+  width: 100%;
+  padding: 0.55rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid #a5d6a7;
 }
 
 /* SCROLLBAR */
@@ -181,12 +224,4 @@ button:hover {
 .historico ul {
   scrollbar-width: thin;
   scrollbar-color: #66bb6a #e8f5e9;
-}
-
-.grafico canvas {
-  width: 100% !important;
-  max-width: 500px;
-  height: 300px !important;
-  background: #f9f9f9;
-  border: 1px solid #ccc;
 }
