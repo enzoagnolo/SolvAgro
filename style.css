@@ -8,7 +8,11 @@
 /* BASE */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f4f3;
+ background-image: url("https://cdn.pixabay.com/photo/2018/01/22/20/00/agro-industry-3099845_1280.jpg");
+   background-repeat: no-repeat;       /* Não repetir a imagem */
+  background-size: cover;             /* Cobre toda a área do body */
+  background-position: center center; /* Centraliza a imagem */
+  background-attachment: fixed;      /* Faz a imagem fixar no fundo durante scroll */
   color: #1b5e20;
   min-height: 100vh;
   padding: 1rem;
@@ -18,7 +22,7 @@ body {
 
 /* CABEÇALHO */
 header {
-  background: linear-gradient(135deg, #2e7d32, #43a047);
+  background: linear-gradient(135deg, #191b197c);
   color: white;
   text-align: center;
   padding: 1.5rem;
