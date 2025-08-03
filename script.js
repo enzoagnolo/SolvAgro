@@ -16,25 +16,75 @@ function simularProdutividade() {
     return;
   }
 
-  // Produtividade base ajustada com regras simples; considerar externalizar para config
   let produtividadeBase = 100;
 
-  if (solo === "arenoso") produtividadeBase -= 20;
-  if (clima === "seco" || clima === "seca_moderada") produtividadeBase -= 25;
-  if (clima === "chuvas_irregulares") produtividadeBase -= 10;
-  if (manejo === "regenerativo") produtividadeBase += 10;
-  if (semente === "transgênica") produtividadeBase += 15;
-  if (quimico === "sim") produtividadeBase += 5;
+  // Solo
+  switch (solo) {
+    case "arenoso": produtividadeBase -= 25; break;
+    case "misturado": produtividadeBase -= 10; break;
+    case "latossolo": produtividadeBase += 5; break;
+    default: break;
+  }
+
+  // Clima
+  switch (clima) {
+    case "seca_severa": produtividadeBase -= 35; break;
+    case "seca_moderada": produtividadeBase -= 20; break;
+    case "chuvas_irregulares": produtividadeBase -= 10; break;
+    case "ideal": produtividadeBase += 5; break;
+    default: break;
+  }
+
+  // Semente
+  switch (semente) {
+    case "transgenica": produtividadeBase += 20; break;
+    case "tratada": produtividadeBase += 10; break;
+    default: break;
+  }
+
+  // Tipo de grão
+  switch (tipoGrao) {
+    case "grão_duro": produtividadeBase += 5; break;
+    case "grão_macio": produtividadeBase += 3; break;
+    default: break;
+  }
+
+  // Manejo
+  switch (manejo) {
+    case "orgânico": produtividadeBase -= 10; break;
+    case "regenerativo": produtividadeBase += 10; break;
+    default: break;
+  }
+
+  // Uso de químico
+  if (quimico === "sim") {
+    produtividadeBase += 8;
+  } else if (quimico === "nao") {
+    produtividadeBase -= 5;
+  }
 
   const produtividadeFinal = Math.max(0, produtividadeBase);
   const producaoTotal = produtividadeFinal * hectares;
   const perda = Math.max(0, 100 * hectares - producaoTotal);
 
-  document.getElementById("resultado").innerHTML = `<strong>Produtividade:</strong> ${produtividadeFinal.toFixed(2)} sacas/hectare`;
-  document.getElementById("ganhoPerda").innerHTML = `<strong>Produção Total:</strong> ${producaoTotal.toFixed(2)} sacas<br/><strong>Perda Estimada:</strong> ${perda.toFixed(2)} sacas`;
+  document.getElementById("resultado").innerHTML =
+    `<strong>Produtividade:</strong> ${produtividadeFinal.toFixed(2)} sacas/hectare`;
+
+  document.getElementById("ganhoPerda").innerHTML =
+    `<strong>Produção Total:</strong> ${producaoTotal.toFixed(2)} sacas<br/>
+     <strong>Perda Estimada:</strong> ${perda.toFixed(2)} sacas`;
 
   gerarGrafico(produtividadeFinal, perda);
-  adicionarAoHistorico({ cultura, solo, clima, produtividadeFinal });
+  adicionarAoHistorico({
+    cultura,
+    solo,
+    semente,
+    manejo,
+    clima,
+    tipoGrao,
+    quimico,
+    produtividadeFinal
+  });
 }
 
 function gerarGrafico(produtividade, perda) {
@@ -88,7 +138,6 @@ function resetarSimulacoes() {
   if (graficoProducao) graficoProducao.destroy();
 }
 
-/* Event listener: garante que o formulário não recarregue a página e chama a simulação */
 window.onload = () => {
   const form = document.getElementById("formSimulador");
   if (form) {
