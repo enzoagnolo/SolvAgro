@@ -23,7 +23,6 @@ function simularProdutividade() {
     case "arenoso": produtividadeBase -= 25; break;
     case "misturado": produtividadeBase -= 10; break;
     case "latossolo": produtividadeBase += 5; break;
-    default: break;
   }
 
   // Clima
@@ -32,31 +31,27 @@ function simularProdutividade() {
     case "seca_moderada": produtividadeBase -= 20; break;
     case "chuvas_irregulares": produtividadeBase -= 10; break;
     case "ideal": produtividadeBase += 5; break;
-    default: break;
   }
 
   // Semente
   switch (semente) {
     case "transgenica": produtividadeBase += 20; break;
     case "tratada": produtividadeBase += 10; break;
-    default: break;
   }
 
   // Tipo de grão
   switch (tipoGrao) {
     case "grão_duro": produtividadeBase += 5; break;
     case "grão_macio": produtividadeBase += 3; break;
-    default: break;
   }
 
   // Manejo
   switch (manejo) {
     case "orgânico": produtividadeBase -= 10; break;
     case "regenerativo": produtividadeBase += 10; break;
-    default: break;
   }
 
-  // Uso de químico
+  // Químico
   if (quimico === "sim") {
     produtividadeBase += 8;
   } else if (quimico === "nao") {
@@ -75,6 +70,7 @@ function simularProdutividade() {
      <strong>Perda Estimada:</strong> ${perda.toFixed(2)} sacas`;
 
   gerarGrafico(produtividadeFinal, perda);
+
   adicionarAoHistorico({
     cultura,
     solo,
@@ -83,6 +79,7 @@ function simularProdutividade() {
     clima,
     tipoGrao,
     quimico,
+    hectares,
     produtividadeFinal
   });
 }
@@ -123,12 +120,45 @@ function adicionarAoHistorico(simulacao) {
 function atualizarHistorico() {
   const lista = document.getElementById("listaHistorico");
   lista.innerHTML = "";
+
   historico.forEach((item, index) => {
     const li = document.createElement("li");
     li.textContent = `#${index + 1} - Cultura: ${item.cultura}, Solo: ${item.solo}, Clima: ${item.clima}, Produtividade: ${item.produtividadeFinal.toFixed(2)} sacas/hectare`;
+
+    li.addEventListener("click", () => carregarSimulacao(item));
     lista.appendChild(li);
   });
 }
+
+function carregarSimulacao(simulacao) {
+  const setValue = (id, valor) => {
+    const el = document.getElementById(id);
+    if (el) el.value = valor;
+  };
+
+  setValue("cultura", simulacao.cultura);
+  setValue("solo", simulacao.solo);
+  setValue("semente", simulacao.semente || "");
+  setValue("manejo", simulacao.manejo || "");
+  setValue("clima", simulacao.clima);
+  setValue("quimico", simulacao.quimico || "");
+  setValue("tipoGrao", simulacao.tipoGrao || "");
+  setValue("hectares", simulacao.hectares || 1);
+
+  // Reexibe os dados salvos da simulação
+  const producaoTotal = simulacao.produtividadeFinal * simulacao.hectares;
+  const perda = Math.max(0, 100 * simulacao.hectares - producaoTotal);
+
+  document.getElementById("resultado").innerHTML =
+    `<strong>Produtividade:</strong> ${simulacao.produtividadeFinal.toFixed(2)} sacas/hectare`;
+
+  document.getElementById("ganhoPerda").innerHTML =
+    `<strong>Produção Total:</strong> ${producaoTotal.toFixed(2)} sacas<br/>
+     <strong>Perda Estimada:</strong> ${perda.toFixed(2)} sacas`;
+
+  gerarGrafico(simulacao.produtividadeFinal, perda);
+}
+
 
 function resetarSimulacoes() {
   historico.length = 0;
