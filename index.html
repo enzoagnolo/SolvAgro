@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SolvAgro – Simulador Agrícola</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="bem.css"/>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -84,7 +84,6 @@
         <div id="graficoContainer">
           <canvas id="graficoProducao" width="400" height="200"></canvas>
         </div>
-      </section>
 
       <!-- Histórico de Simulações -->
       <section class="historico">
@@ -94,12 +93,27 @@
         </div>
         <ul id="listaHistorico"></ul>
       </section>
+
+              <section style="margin-top: 2rem; text-align:center;">
+          <button id="btnSolvBem" style="background-color:#2e7d32; color:#fff; padding: 10px 20px; border:none; border-radius:5px; cursor:pointer; font-size:1.1rem;">
+            Ir para SolvBem – Bem-estar Animal
+          </button>
+        </section>
+
+      </section>
+
     </main>
 
     <footer>
       <p>&copy; 2025 SolvAgro</p>
     </footer>
   </div>
+
+  <script>
+    document.getElementById('btnSolvBem').addEventListener('click', () => {
+      window.location.href = 'solvbem.html';
+    });
+  </script>
 
   <script src="script.js"></script>
 </body>

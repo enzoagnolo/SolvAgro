@@ -18,14 +18,12 @@ function simularProdutividade() {
 
   let produtividadeBase = 100;
 
-  // Solo
   switch (solo) {
     case "arenoso": produtividadeBase -= 25; break;
     case "misturado": produtividadeBase -= 10; break;
     case "latossolo": produtividadeBase += 5; break;
   }
 
-  // Clima
   switch (clima) {
     case "seca_severa": produtividadeBase -= 35; break;
     case "seca_moderada": produtividadeBase -= 20; break;
@@ -33,25 +31,21 @@ function simularProdutividade() {
     case "ideal": produtividadeBase += 5; break;
   }
 
-  // Semente
   switch (semente) {
     case "transgenica": produtividadeBase += 20; break;
     case "tratada": produtividadeBase += 10; break;
   }
 
-  // Tipo de grão
   switch (tipoGrao) {
     case "grão_duro": produtividadeBase += 5; break;
     case "grão_macio": produtividadeBase += 3; break;
   }
 
-  // Manejo
   switch (manejo) {
     case "orgânico": produtividadeBase -= 10; break;
     case "regenerativo": produtividadeBase += 10; break;
   }
 
-  // Químico
   if (quimico === "sim") {
     produtividadeBase += 8;
   } else if (quimico === "nao") {
@@ -114,6 +108,7 @@ function gerarGrafico(produtividade, perda) {
 
 function adicionarAoHistorico(simulacao) {
   historico.push(simulacao);
+  salvarHistoricoLocal();
   atualizarHistorico();
 }
 
@@ -124,7 +119,6 @@ function atualizarHistorico() {
   historico.forEach((item, index) => {
     const li = document.createElement("li");
     li.textContent = `#${index + 1} - Cultura: ${item.cultura}, Solo: ${item.solo}, Clima: ${item.clima}, Produtividade: ${item.produtividadeFinal.toFixed(2)} sacas/hectare`;
-
     li.addEventListener("click", () => carregarSimulacao(item));
     lista.appendChild(li);
   });
@@ -145,7 +139,6 @@ function carregarSimulacao(simulacao) {
   setValue("tipoGrao", simulacao.tipoGrao || "");
   setValue("hectares", simulacao.hectares || 1);
 
-  // Reexibe os dados salvos da simulação
   const producaoTotal = simulacao.produtividadeFinal * simulacao.hectares;
   const perda = Math.max(0, 100 * simulacao.hectares - producaoTotal);
 
@@ -159,9 +152,26 @@ function carregarSimulacao(simulacao) {
   gerarGrafico(simulacao.produtividadeFinal, perda);
 }
 
+function salvarHistoricoLocal() {
+  localStorage.setItem("historicoSimulacoes", JSON.stringify(historico));
+}
+
+function carregarHistoricoLocal() {
+  const dados = localStorage.getItem("historicoSimulacoes");
+  if (dados) {
+    try {
+      const historicoCarregado = JSON.parse(dados);
+      historicoCarregado.forEach((sim) => historico.push(sim));
+      atualizarHistorico();
+    } catch (e) {
+      console.error("Erro ao carregar histórico:", e);
+    }
+  }
+}
 
 function resetarSimulacoes() {
   historico.length = 0;
+  localStorage.removeItem("historicoSimulacoes");
   atualizarHistorico();
   document.getElementById("resultado").innerHTML = "";
   document.getElementById("ganhoPerda").innerHTML = "";
@@ -176,4 +186,6 @@ window.onload = () => {
       simularProdutividade();
     });
   }
+
+  carregarHistoricoLocal();
 };
