@@ -1,116 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SolvAgro – Simulador Agrícola</title>
-  <link rel="stylesheet" href="style.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Usuário</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e690cd0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      text-align: left;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #btnSimulador {
+      display: none; /* começa escondido */
+      background: #2e7d32;
+    }
+    #btnSimulador:hover {
+      background: #4ec554;
+    }
+  </style>
 </head>
 <body>
+
   <div class="container">
-    <header>
-      <h1>SolvAgro</h1>
-      <p class="slogan">Simule. Preveja. Decida com inteligência.</p>
-    </header>
+    <h2>Cadastro de Usuário</h2>
+    <form id="cadastroForm">
+      <label for="nome">Nome completo:</label>
+      <input type="text" id="nome" name="nome" required>
 
-    <main>
-      <!-- Formulário de Simulação -->
-      <section class="simulador">
-        <h2>Simule sua produtividade</h2>
-        <form id="formSimulador">
-          <label for="cultura">Cultura:</label>
-          <select id="cultura" required>
-            <option value="">Selecione</option>
-            <option value="soja">Soja</option>
-            <option value="milho">Milho</option>
-            <option value="trigo">Trigo</option>
-            <option value="feijão">Feijão</option>
-            <option value="café">Café</option>
-            <option value="cana">Cana-de-açúcar</option>
-            <option value="aveia">Aveia</option>
-            <option value="cevada">Cevada</option>
-          </select>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
 
-          <label for="solo">Tipo de Solo:</label>
-          <select id="solo" required>
-            <option value="">Selecione</option>
-            <option value="latossolo_vermelho">Latossolo Vermelho</option>
-            <option value="argiloso">Argiloso</option>
-            <option value="arenoso">Arenoso</option>
-            <option value="massapê">Massapê</option>
-          </select>
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" required minlength="6">
 
-          <label for="semente">Semente:</label>
-          <select id="semente" required>
-            <option value="">Selecione</option>
-            <option value="convencional">Convencional</option>
-            <option value="tratada">Tratada</option>
-            <option value="transgênica">Transgênica</option>
-            <option value="híbrida">Híbrida</option>
-          </select>
+      <label for="confirma">Confirmar senha:</label>
+      <input type="password" id="confirma" name="confirma" required minlength="6">
 
-          <label for="manejo">Tipo de Manejo:</label>
-          <select id="manejo" required>
-            <option value="">Selecione</option>
-            <option value="convencional">Convencional</option>
-            <option value="orgânico">Orgânico</option>
-            <option value="regenerativo">Regenerativo</option>
-            <option value="integração_lavoura_pecuária">Integração Lavoura-Pecuária</option>
-          </select>
+      <button type="submit">Cadastrar</button>
+    </form>
 
-          <label for="clima">Previsão de Clima:</label>
-          <select id="clima" required>
-            <option value="">Selecione</option>
-            <option value="chuvas_constantes">Chuvas constantes</option>
-            <option value="seca_moderada">Seca moderada</option>
-            <option value="seca_severa">Seca severa</option>
-            <option value="chuvas_irregulares">Chuvas irregulares</option>
-            <option value="geadas">Geadas</option>
-            <option value="sem_chuva">Sem previsão de chuva</option>
-          </select>
-
-          <label for="hectares">Quantidade de Hectares:</label>
-          <input type="number" id="hectares" min="0" step="0.1" placeholder="Ex: 10" required />
-
-          <button type="submit">Simular</button>
-        </form>
-
-        <div id="resultado" class="resultado"></div>
-        <div id="ganhoPerda"></div>
-        <div id="sugestoes"></div>
-
-        <!-- Gráfico -->
-        <div id="graficoContainer">
-          <canvas id="graficoProducao" width="400" height="200"></canvas>
-        </div>
-
-      <!-- Histórico de Simulações -->
-      <section class="historico">
-        <div class="historico-header">
-          <h2>Histórico de Simulações</h2>
-          <button id="btnResetar" onclick="resetarSimulacoes()">Limpar Histórico</button>
-        </div>
-        <ul id="listaHistorico"></ul>
-      </section>
-
-              <section style="margin-top: 2rem; text-align:center;">
-        </section>
-      </section>
-
-    </main>
-
-    <footer>
-      <p>&copy; 2025 SolvAgro</p>
-    </footer>
+    <!-- botão escondido que só aparece depois -->
+    <button id="btnSimulador" onclick="window.location.href='cadastrar.html'">Ir para o Simulador</button>
   </div>
 
   <script>
-    document.getElementById('btnSolvBem').addEventListener('click', () => {
-      window.location.href = 'solvbem.html';
+    document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Cadastro realizado com sucesso!");
+
+      // mostrar botão para o simulador
+      document.getElementById("btnSimulador").style.display = "block";
     });
   </script>
 
-  <script src="script.js"></script>
 </body>
 </html>
