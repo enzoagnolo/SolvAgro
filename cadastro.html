@@ -19,15 +19,16 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 350px;
+      text-align: center;
     }
     h2 {
-      text-align: center;
       margin-bottom: 20px;
     }
     label {
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
+      text-align: left;
     }
     input {
       width: 100%;
@@ -45,9 +46,17 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
+      margin-top: 10px;
     }
     button:hover {
       background: #45a049;
+    }
+    #btnSimulador {
+      display: none; /* começa escondido */
+      background: #2e7d32;
+    }
+    #btnSimulador:hover {
+      background: #4ec554;
     }
   </style>
 </head>
@@ -70,9 +79,20 @@
 
       <button type="submit">Cadastrar</button>
     </form>
+
+    <!-- botão escondido que só aparece depois -->
+    <button id="btnSimulador" onclick="window.location.href='index.html'">Ir para o Simulador</button>
   </div>
 
-  <!-- Importa o script -->
-  <script src="script.js"></script>
+  <script>
+    document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Cadastro realizado com sucesso!");
+
+      // mostrar botão para o simulador
+      document.getElementById("btnSimulador").style.display = "block";
+    });
+  </script>
+
 </body>
 </html>
