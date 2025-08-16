@@ -1,3 +1,16 @@
+// --- CADASTRO DE USUÁRIO ---
+document.addEventListener("DOMContentLoaded", () => {
+  const cadastroForm = document.getElementById("cadastroForm");
+  if (cadastroForm) {
+    cadastroForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "index.html"; // redireciona
+    });
+  }
+});
+
+// --- SIMULADOR AGRÍCOLA ---
 let graficoProducao = null;
 const historico = [];
 
