@@ -5,60 +5,102 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de Usuário</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1e690cd0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 350px;
-      text-align: center;
-    }
-    h2 {
-      margin-bottom: 20px;
-    }
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-      text-align: left;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: #4CAF50;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background: #45a049;
-    }
-    #btnSimulador {
-      display: none; /* começa escondido */
-      background: #2e7d32;
-    }
-    #btnSimulador:hover {
-      background: #4ec554;
-    }
-  </style>
+  /* BASE */
+  body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: antiquewhite;
+    animation: gradientMove 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  /* CONTAINER */
+  .container {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    width: 360px;
+    text-align: center;
+    animation: fadeIn 0.7s ease;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #2e7d32;
+  }
+
+  /* FORM */
+ label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  text-align: center; /* centraliza o texto do label */
+  color: #1b5e20;
+}
+
+input {
+  width: 85%;              /* reduz largura */
+  max-width: 280px;        /* largura máxima */
+  padding: 12px;
+  margin: 0 auto 18px;     /* centraliza horizontalmente */
+  display: block;          /* necessário p/ margin auto funcionar */
+  border: none;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid #66bb6a;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(102, 187, 106, 0.4);
+}
+  /* BOTÕES */
+  button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #43a047, #66bb6a);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 14px rgba(67, 160, 71, 0.25);
+  }
+
+  button:hover {
+    background: linear-gradient(135deg, #2e7d32, #43a047);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(46, 125, 50, 0.35);
+  }
+
+  button:active {
+    transform: scale(0.97);
+  }
+
+  /* BOTÃO EXTRA (SIMULADOR) */
+  #btnSimulador {
+    display: none; /* começa escondido */
+    background: linear-gradient(135deg, #2e7d32, #4caf50);
+  }
+  #btnSimulador:hover {
+    background: linear-gradient(135deg, #1b5e20, #43a047);
+  }
+
+</style>
+
 </head>
 <body>
 
