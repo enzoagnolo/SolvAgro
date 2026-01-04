@@ -3,108 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SolvAgro - Simulador Agrícola</title>
+  <title>Caffè Dell'Agnolo</title>
 
-  <!-- Estilos -->
-  <link rel="stylesheet" href="style.css" />
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <!-- Biblioteca para gráficos -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Cabeçalho -->
-  <header>
-    <h1>SolvAgro</h1>
-    <p>Simulador de Plantio Inteligente</p>
+  <!-- HERO -->
+  <header class="fade-up">
+    <h1>Caffè Dell'Agnolo</h1>
+    <p>
+      Mais do que café: estilo, sabor e presença em cada xícara.  
+      Uma nova marca que nasce com personalidade e transforma o café em uma experiência única.
+    </p>
   </header>
 
-  <!-- Conteúdo Principal -->
-  <main>
+  <!-- ESSÊNCIA -->
+  <section class="fade-up">
+    <h2 class="section-title">Nossa Essência</h2>
+    <p class="section-text">
+      Caffè Dell'Agnolo cresce com a inspiração do antepassado e a paixão pelo café de qualidade.
+      Valorizamos cada etapa do processo para entregar uma experiência sensorial autêntica,
+      onde tradição e cuidado se encontram em cada xícara.
+    </p>
+  </section>
 
-    <!-- Simulador de Produtividade -->
-    <section class="simulador">
-      <h2>Simule sua produtividade</h2>
+  <!-- SABORES -->
+  <section>
+    <h2 class="section-title fade-up">Nossos Cafés</h2>
 
-      <!-- Formulário de entrada -->
-      <label for="cultura">Cultura:</label>
-      <select id="cultura">
-        <option value="soja">Soja</option>
-        <option value="milho">Milho</option>
-        <option value="trigo">Trigo</option>
-      </select>
+    <!-- IMAGEM -->
+    <div class="sabores-image fade-up">
+      <img src="cafe-sabores.jpg" alt="Cafés Caffè Dell'Agnolo">
+    </div>
 
-      <label for="quimico">Usa produto químico?</label>
-      <select id="quimico">
-        <option value="sim">Sim</option>
-        <option value="nao">Não</option>
-      </select>
-
-      <label for="tipoGrao">Tipo de Grão:</label>
-      <select id="tipoGrao">
-        <option value="convencional">Convencional</option>
-        <option value="transgenico">Transgênico</option>
-        <option value="organico">Orgânico</option>
-      </select>
-
-      <label for="solo">Tipo de Solo:</label>
-      <select id="solo">
-        <option value="argiloso">Argiloso</option>
-        <option value="arenoso">Arenoso</option>
-        <option value="misto">Misto</option>
-      </select>
-
-      <label for="clima">Condição Climática:</label>
-      <select id="clima">
-        <option value="seco">Seco</option>
-        <option value="ideal">Ideal</option>
-        <option value="chuvoso">Chuvoso</option>
-      </select>
-
-      <label for="hectares">Quantidade de Hectares:</label>
-      <input type="number" id="hectares" min="0" step="0.1" placeholder="Ex: 10" />
-
-      <!-- Botão de simulação -->
-      <button onclick="simularProdutividade()">Simular</button>
-
-      <!-- Resultados -->
-      <div id="resultado"></div>
-      <div id="ganhoPerda"></div>
-      <div id="sugestoes"></div>
-
-      <!-- Gráfico de produção -->
-      <div id="graficoContainer">
-        <canvas id="graficoProducao" width="400" height="200"></canvas>
+    <!-- CARDS -->
+    <div class="card-grid">
+      <div class="card fade-up">
+        <h3>Café Sabor da Roça</h3>
+        <p>
+          Inspirado no café coado da roça, traz notas terrosas e uma doçura natural,
+          despertando a memória afetiva do café servido no copo americano.
+        </p>
       </div>
-    </section>
 
-    <!-- Histórico de Simulações -->
-    <section class="historico">
-      <div class="historico-header">
-        <h2>Histórico de Simulações</h2>
-        <button id="btnResetar" onclick="resetarSimulacoes()">Limpar Histórico</button>
+      <div class="card fade-up">
+        <h3>Café Outono</h3>
+        <p>
+          Notas finas e um aroma envolvente que perfuma o ambiente,
+          com especiarias delicadas e um marcante toque de canela.
+        </p>
       </div>
-      <ul id="listaHistorico"></ul>
-    </section>
+    </div>
 
-    <!-- Assistente Agronômico -->
-    <section class="assistente">
-      <h2>Assistente Agronômico Virtual</h2>
-      <input type="text" id="pergunta" placeholder="Digite sua pergunta..." />
-      <button onclick="responderPergunta()">Perguntar</button>
-      <div id="resposta"></div>
-    </section>
+    <!-- TEXTO ABAIXO DOS SABORES -->
+    <div class="text-block fade-up">
+      <p>
+        Da seleção dos grãos ao empacotamento final, todo o processo é feito de forma artesanal,
+        garantindo qualidade, autenticidade e atenção absoluta aos detalhes.
+      </p>
 
-  </main>
+      <p>
+        Mais do que adquirir um café, convidamos você a viver uma experiência completa —
+        do primeiro contato com a marca ao prazer de saborear cada xícara.
+      </p>
+    </div>
+  </section>
 
-  <!-- Rodapé -->
+  <!-- CONTATO -->
+  <section class="fade-up">
+    <h2 class="section-title">Pedidos</h2>
+    <p class="section-text">
+      Faça seu pedido diretamente pelo WhatsApp:
+      <br><br>
+      <a class="whatsapp" href="https://wa.me/5599999999999" target="_blank">
+        📲 Falar no WhatsApp
+      </a>
+    </p>
+  </section>
+
   <footer>
-    <p>SolvAgro © 2025</p>
+    © <span id="year"></span> Caffè Dell'Agnolo · Todos os direitos reservados
   </footer>
 
-  <!-- Scripts -->
-  <script src="script.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
 </body>
 </html>

@@ -1,0 +1,133 @@
+:root {
+  --bg: #f7f6f3;
+  --primary: #1c1c1c;
+  --secondary: #ffffff;
+  --muted: #6f6f6f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--primary);
+  line-height: 1.6;
+}
+
+/* HERO */
+header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+}
+
+header p {
+  max-width: 700px;
+  margin: 1.5rem auto 0;
+  color: var(--muted);
+}
+
+/* SECTIONS */
+section {
+  padding: 6rem 8vw;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-text {
+  max-width: 800px;
+  color: var(--muted);
+}
+
+/* SABORES IMAGE */
+.sabores-image {
+  max-width: 720px;
+  margin: 2.5rem auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.sabores-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.18);
+}
+
+.sabores-image img {
+  width: 100%;
+  display: block;
+}
+
+/* CARDS */
+.card-grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--secondary);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.8rem;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* TEXTO ABAIXO */
+.text-block {
+  max-width: 800px;
+  margin: 3rem auto 0;
+  color: var(--muted);
+}
+
+.text-block p + p {
+  margin-top: 1.2rem;
+}
+
+/* WHATSAPP */
+.whatsapp {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.8rem 1.8rem;
+  border-radius: 30px;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp:hover {
+  transform: scale(1.05);
+}
+
+/* FOOTER */
+footer {
+  padding: 3rem;
